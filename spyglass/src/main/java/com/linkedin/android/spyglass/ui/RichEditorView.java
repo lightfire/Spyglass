@@ -111,15 +111,19 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         init(context, attrs, defStyleAttr);
     }
 
+    public ListView getmSuggestionsList(){
+        return mSuggestionsList;
+    }
+
     public void init(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         // Inflate view from XML layout file
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.editor_view, this, true);
 
         // Get the inner views
-        mMentionsEditText = (MentionsEditText) findViewById(R.id.text_editor);
-        mTextCounterView = (TextView) findViewById(R.id.text_counter);
-        mSuggestionsList = (ListView) findViewById(R.id.suggestions_list);
+        mMentionsEditText =  findViewById(R.id.text_editor);
+        mTextCounterView = findViewById(R.id.text_counter);
+        mSuggestionsList =  findViewById(R.id.suggestions_list);
 
         // Get the MentionSpanConfig from custom XML attributes and set it
         MentionSpanConfig mentionSpanConfig = parseMentionSpanConfigFromAttributes(attrs, defStyleAttr);
