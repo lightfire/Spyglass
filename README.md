@@ -17,17 +17,19 @@ Features
 Getting Started
 ---------------
 
-Grab via Maven:
-```xml
-<dependency>
-  <groupId>com.linkedin.android.spyglass</groupId>
-  <artifactId>spyglass</artifactId>
-  <version>1.4.0</version>
-</dependency>
 ```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+
 or Gradle:
 ```groovy
-compile 'com.linkedin.android.spyglass:spyglass:1.4.0'
+ compile 'com.github.lightfire:Spyglass:-SNAPSHOT'
 ```
 
 Overview
