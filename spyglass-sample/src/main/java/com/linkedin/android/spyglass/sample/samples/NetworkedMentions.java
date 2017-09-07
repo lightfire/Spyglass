@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -50,9 +49,9 @@ public class NetworkedMentions extends AppCompatActivity implements QueryTokenRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.networked_mentions);
-        delayLabel = (TextView) findViewById(R.id.label_network_delay);
-        delaySeek = (SeekBar) findViewById(R.id.seek_network_delay);
-        editor = (RichEditorView) findViewById(R.id.editor);
+        delayLabel =  findViewById(R.id.label_network_delay);
+        delaySeek =  findViewById(R.id.seek_network_delay);
+        editor = findViewById(R.id.editor);
 
         // Update network delay text
         delayLabel.setText("Mock Network Delay: 2.0 seconds");

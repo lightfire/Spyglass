@@ -66,10 +66,6 @@ import java.util.List;
  * <p/>
  * See {@link R.styleable#RichEditorView Attributes}
  *
- * @attr ref R.styleable#RichEditorView_mentionTextColor
- * @attr ref R.styleable#RichEditorView_mentionTextBackgroundColor
- * @attr ref R.styleable#RichEditorView_selectedMentionTextColor
- * @attr ref R.styleable#RichEditorView_selectedMentionTextBackgroundColor
  */
 public class RichEditorView extends RelativeLayout implements TextWatcher, QueryTokenReceiver, SuggestionsResultListener, SuggestionsVisibilityManager {
 
@@ -111,6 +107,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         init(context, attrs, defStyleAttr);
     }
 
+    @SuppressWarnings("unused")
     public ListView getmSuggestionsList(){
         return mSuggestionsList;
     }
@@ -200,7 +197,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
 	 *
 	 * Example: obj.setInputFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
 	 *
-	 * @param filters
+	 * @param filters {@link InputFilter...}
 	 */
     public void setInputFilters(InputFilter... filters) {
 		mMentionsEditText.setFilters(filters);
