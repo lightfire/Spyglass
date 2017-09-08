@@ -22,7 +22,7 @@ import android.support.annotation.ColorInt;
  * {@link MentionSpanConfig.Builder} class.
  */
 public class MentionSpanConfig {
-
+    public final int LIST_POSITION;
     @ColorInt public final int NORMAL_TEXT_COLOR;
     @ColorInt public final int NORMAL_TEXT_BACKGROUND_COLOR;
     @ColorInt public final int SELECTED_TEXT_COLOR;
@@ -31,16 +31,23 @@ public class MentionSpanConfig {
     MentionSpanConfig(@ColorInt final int normalTextColor,
                       @ColorInt final int normalTextBackgroundColor,
                       @ColorInt final int selectedTextColor,
-                      @ColorInt final int selectedTextBackgroundColor) {
+                      @ColorInt final int selectedTextBackgroundColor,
+                      final int listPosition) {
         this.NORMAL_TEXT_COLOR = normalTextColor;
         this.NORMAL_TEXT_BACKGROUND_COLOR = normalTextBackgroundColor;
         this.SELECTED_TEXT_COLOR = selectedTextColor;
         this.SELECTED_TEXT_BACKGROUND_COLOR = selectedTextBackgroundColor;
+        this.LIST_POSITION = listPosition;
     }
 
     public static class Builder {
 
+        public void setListPosition(int listPosition) {
+            this.listPosition = listPosition;
+        }
+
         // Default colors
+        private int listPosition = 0;
         @ColorInt private int normalTextColor = Color.parseColor("#00a0dc");
         @ColorInt private int normalTextBackgroundColor = Color.TRANSPARENT;
         @ColorInt private int selectedTextColor = Color.WHITE;
@@ -76,7 +83,7 @@ public class MentionSpanConfig {
 
         public MentionSpanConfig build() {
             return new MentionSpanConfig(normalTextColor, normalTextBackgroundColor,
-                                         selectedTextColor, selectedTextBackgroundColor);
+                                         selectedTextColor, selectedTextBackgroundColor,listPosition);
         }
     }
 }

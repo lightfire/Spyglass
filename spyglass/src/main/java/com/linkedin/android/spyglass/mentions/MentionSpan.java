@@ -127,7 +127,7 @@ public class MentionSpan extends ClickableSpan implements Parcelable {
         dest.writeInt(config.NORMAL_TEXT_BACKGROUND_COLOR);
         dest.writeInt(config.SELECTED_TEXT_COLOR);
         dest.writeInt(config.SELECTED_TEXT_BACKGROUND_COLOR);
-
+        dest.writeInt(config.LIST_POSITION);
         dest.writeInt(getDisplayMode().ordinal());
         dest.writeInt(isSelected() ? 1 : 0);
         dest.writeParcelable(getMention(), flags);
@@ -138,8 +138,9 @@ public class MentionSpan extends ClickableSpan implements Parcelable {
         int normalTextBackgroundColor = in.readInt();
         int selectedTextColor = in.readInt();
         int selectedTextBackgroundColor = in.readInt();
+        int listPosition = in.readInt();
         config = new MentionSpanConfig(normalTextColor, normalTextBackgroundColor,
-                                       selectedTextColor, selectedTextBackgroundColor);
+                                       selectedTextColor, selectedTextBackgroundColor,listPosition);
 
         mDisplayMode = MentionDisplayMode.values()[in.readInt()];
         setSelected((in.readInt() == 1));

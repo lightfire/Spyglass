@@ -4,6 +4,11 @@
     <attr name="mentionTextBackgroundColor" format="color"/>
     <attr name="selectedMentionTextColor" format="color"/>
     <attr name="selectedMentionTextBackgroundColor" format="color"/>
+    <attr name="listPosition" format="enum">
+        <enum name="top" value="1"/>
+        <enum name="center" value="0"/>
+        <enum name="bottom" value="2"/>
+    </attr>
 
     <declare-styleable name="MentionsEditText">
         <attr name="mentionTextColor"/>
@@ -17,5 +22,6 @@
         <attr name="mentionTextBackgroundColor"/>
         <attr name="selectedMentionTextColor"/>
         <attr name="selectedMentionTextBackgroundColor"/>
+        <attr name="listPosition"/>
     </declare-styleable>
 </resources>

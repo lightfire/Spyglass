@@ -69,6 +69,10 @@ import java.util.List;
  */
 public class RichEditorView extends RelativeLayout implements TextWatcher, QueryTokenReceiver, SuggestionsResultListener, SuggestionsVisibilityManager {
 
+    public MentionsEditText getmMentionsEditText() {
+        return mMentionsEditText;
+    }
+
     private MentionsEditText mMentionsEditText;
     private int mOriginalInputType = InputType.TYPE_CLASS_TEXT; // Default to plain text
     private TextView mTextCounterView;
@@ -113,9 +117,26 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
     }
 
     public void init(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        MentionSpanConfig mentionSpanConfig = parseMentionSpanConfigFromAttributes(attrs, defStyleAttr);
+
         // Inflate view from XML layout file
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.editor_view, this, true);
+
+        switch (mentionSpanConfig.LIST_POSITION){
+            case 1:
+                inflater.inflate(R.layout.editor_view_top, this, true);
+                break;
+            case 2:
+                inflater.inflate(R.layout.editor_view, this, true);
+                break;
+            case 0:
+            default:
+                inflater.inflate(R.layout.editor_view, this, true);
+                break;
+
+        }
+
+
 
         // Get the inner views
         mMentionsEditText =  findViewById(R.id.text_editor);
@@ -123,7 +144,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         mSuggestionsList =  findViewById(R.id.suggestions_list);
 
         // Get the MentionSpanConfig from custom XML attributes and set it
-        MentionSpanConfig mentionSpanConfig = parseMentionSpanConfigFromAttributes(attrs, defStyleAttr);
+
         mMentionsEditText.setMentionSpanConfig(mentionSpanConfig);
 
         // Create the tokenizer to use for the editor
@@ -174,6 +195,10 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
                                                                           R.styleable.RichEditorView,
                                                                           defStyleAttr,
                                                                           0);
+
+
+        int listPosition = attributes.getInt(R.styleable.RichEditorView_listPosition,0);
+        builder.setListPosition(listPosition);
         @ColorInt int normalTextColor = attributes.getColor(R.styleable.RichEditorView_mentionTextColor, -1);
         builder.setMentionTextColor(normalTextColor);
         @ColorInt int normalBgColor = attributes.getColor(R.styleable.RichEditorView_mentionTextBackgroundColor, -1);
