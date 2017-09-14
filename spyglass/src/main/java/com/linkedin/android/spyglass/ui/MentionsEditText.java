@@ -14,6 +14,7 @@
 
 package com.linkedin.android.spyglass.ui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -30,6 +31,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.Selection;
@@ -77,7 +79,7 @@ import java.util.List;
  * @attr ref R.styleable#MentionsEditText_selectedMentionTextColor
  * @attr ref R.styleable#MentionsEditText_selectedMentionTextBackgroundColor
  */
-public class MentionsEditText extends EditText implements TokenSource {
+public class MentionsEditText extends AppCompatEditText implements TokenSource {
 
     private static final String KEY_MENTION_SPANS = "mention_spans";
     private static final String KEY_MENTION_SPAN_STARTS = "mention_span_starts";
@@ -325,6 +327,8 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Paste clipboard content between min and max positions.
      */
+    @SuppressWarnings("deprecation")
+    @SuppressLint("ObsoleteSdkInt")
     private void paste(@IntRange(from = 0) int min, @IntRange(from = 0) int max) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -400,6 +404,8 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Save the selected text and intent in ClipboardManager
      */
+    @SuppressWarnings("deprecation")
+    @SuppressLint("ObsoleteSdkInt")
     private void saveToClipboard(@NonNull CharSequence selectedText, @Nullable Intent intent) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -1173,6 +1179,7 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Simple class to hold onto a {@link MentionSpan} temporarily while the text is changing.
      */
+    @SuppressWarnings("WeakerAccess")
     private class PlaceholderSpan {
 
         public final MentionSpan holder;
@@ -1220,6 +1227,7 @@ public class MentionsEditText extends EditText implements TokenSource {
      * Custom EditableFactory designed so that we can use the customized {@link MentionsEditable} in place of the
      * default {@link Editable}.
      */
+    @SuppressWarnings("WeakerAccess")
     public static class MentionsEditableFactory extends Editable.Factory {
 
         private static MentionsEditableFactory sInstance = new MentionsEditableFactory();
@@ -1244,6 +1252,7 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Custom factory used when creating a {@link MentionSpan}.
      */
+    @SuppressWarnings("WeakerAccess")
     public static class MentionSpanFactory {
 
         @NonNull
@@ -1260,6 +1269,7 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Custom {@link MovementMethod} for this class used to override specific behavior in {@link ArrowKeyMovementMethod}.
      */
+    @SuppressWarnings("WeakerAccess")
     public static class MentionsMovementMethod extends ArrowKeyMovementMethod {
 
         private static MentionsMovementMethod sInstance;
@@ -1393,6 +1403,7 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Convenience class to save/restore the MentionsEditable state.
      */
+    @SuppressWarnings("WeakerAccess")
     protected static class SavedState extends BaseSavedState {
         public MentionsEditable mentionsEditable;
 
@@ -1431,6 +1442,7 @@ public class MentionsEditText extends EditText implements TokenSource {
     /**
      * Interface to receive a callback for mention events.
      */
+    @SuppressWarnings("WeakerAccess")
     public interface MentionWatcher {
         /**
          * Callback for when a mention is added.
