@@ -152,7 +152,6 @@ public class MentionsEditText extends AppCompatEditText implements TokenSource {
         builder.setSelectedMentionTextColor(selectedTextColor);
         @ColorInt int selectedBgColor = attributes.getColor(R.styleable.MentionsEditText_selectedMentionTextBackgroundColor, -1);
         builder.setSelectedMentionTextBackgroundColor(selectedBgColor);
-
         attributes.recycle();
 
         return builder.build();

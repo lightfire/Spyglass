@@ -33,7 +33,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 import com.linkedin.android.spyglass.R;
 import com.linkedin.android.spyglass.mentions.MentionSpan;
 import com.linkedin.android.spyglass.mentions.MentionSpanConfig;
@@ -75,7 +75,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
 
     private MentionsEditText mMentionsEditText;
     private int mOriginalInputType = InputType.TYPE_CLASS_TEXT; // Default to plain text
-    private TextView mTextCounterView;
+
     private ListView mSuggestionsList;
 
     private QueryTokenReceiver mHostQueryTokenReceiver;
@@ -140,7 +140,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
 
         // Get the inner views
         mMentionsEditText =  findViewById(R.id.text_editor);
-        mTextCounterView = findViewById(R.id.text_counter);
+
         mSuggestionsList =  findViewById(R.id.suggestions_list);
 
         // Get the MentionSpanConfig from custom XML attributes and set it
@@ -175,9 +175,6 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
                 }
             }
         });
-
-        // Display and update the editor text counter (starts it at 0)
-        updateEditorTextCount();
 
         // Wrap the EditText content height if necessary (ideally, allow this to be controlled via custom XML attribute)
         setEditTextShouldWrapContent(mEditTextShouldWrapContent);
@@ -275,26 +272,6 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         return -1;
     }
 
-    /**
-     * Show or hide the text counter view.
-     *
-     * @param display true to display the text counter view
-     */
-    public void displayTextCounter(boolean display) {
-        if (display) {
-            mTextCounterView.setVisibility(TextView.VISIBLE);
-        } else {
-            mTextCounterView.setVisibility(TextView.GONE);
-        }
-    }
-
-    /**
-     * @return true if the text counter view is currently visible to the user
-     */
-    public boolean isDisplayingTextCounter() {
-        return mTextCounterView != null && mTextCounterView.getVisibility() == TextView.VISIBLE;
-    }
-
     // --------------------------------------------------
     // TextWatcher Implementation
     // --------------------------------------------------
@@ -320,7 +297,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
      */
     @Override
     public void afterTextChanged(Editable s) {
-        updateEditorTextCount();
+
     }
 
     // --------------------------------------------------
@@ -384,7 +361,6 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         // Change view depending on whether suggestions are being shown or not
         if (display) {
             disableSpellingSuggestions(true);
-            mTextCounterView.setVisibility(View.GONE);
             mSuggestionsList.setVisibility(View.VISIBLE);
             mPrevEditTextParams = mMentionsEditText.getLayoutParams();
             mPrevEditTextBottomPadding = mMentionsEditText.getPaddingBottom();
@@ -404,7 +380,6 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
             }
         } else {
             disableSpellingSuggestions(false);
-            mTextCounterView.setVisibility(View.VISIBLE);
             mSuggestionsList.setVisibility(View.GONE);
             mMentionsEditText.setPadding(mMentionsEditText.getPaddingLeft(), mMentionsEditText.getPaddingTop(), mMentionsEditText.getPaddingRight(), mPrevEditTextBottomPadding);
             if (mPrevEditTextParams == null) {
@@ -451,27 +426,6 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         }
         mMentionsEditText.setRawInputType(disable ? InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS : mOriginalInputType);
         mMentionsEditText.setSelection(start, end);
-    }
-
-    // --------------------------------------------------
-    // Private Methods
-    // --------------------------------------------------
-
-    /**
-     * Updates the TextView counting the number of characters in the editor. Sets not only the content
-     * of the TextView, but also the color of the text depending if the limit has been reached.
-     */
-    private void updateEditorTextCount() {
-        if (mMentionsEditText != null && mTextCounterView != null) {
-            int textCount = mMentionsEditText.getMentionsText().length();
-            mTextCounterView.setText(String.valueOf(textCount));
-
-            if (mTextCountLimit > 0 && textCount > mTextCountLimit) {
-                mTextCounterView.setTextColor(mBeyondCountLimitTextColor);
-            } else {
-                mTextCounterView.setTextColor(mWithinCountLimitTextColor);
-            }
-        }
     }
 
     // --------------------------------------------------
