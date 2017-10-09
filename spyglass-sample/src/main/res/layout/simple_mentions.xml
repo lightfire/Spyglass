@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#BDBDBD"
-        android:orientation="vertical">
+        android:text="@string/simple_mentions_description"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/simple_mentions_description"/>
 
-    </LinearLayout>
 
     <com.linkedin.android.spyglass.ui.RichEditorView
+        android:layout_below="@id/label"
         android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:minHeight="150dp" />
-</LinearLayout>
+
+    <ListView
+        android:background="#70ffe188"
+        android:layout_marginTop="60dp"
+        android:visibility="gone"
+        android:id="@+id/externalListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

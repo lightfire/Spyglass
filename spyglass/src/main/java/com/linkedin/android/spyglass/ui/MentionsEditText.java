@@ -329,13 +329,7 @@ public class MentionsEditText extends AppCompatEditText implements TokenSource {
     @SuppressWarnings("deprecation")
     @SuppressLint("ObsoleteSdkInt")
     private void paste(@IntRange(from = 0) int min, @IntRange(from = 0) int max) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            MentionsEditable text = getMentionsText();
-            text.replace(text.length(), text.length(), clipboard.getText());
-        } else {
-            pasteHoneycombImpl(min, max);
-        }
+        pasteHoneycombImpl(min, max);
     }
 
     /**
@@ -406,15 +400,11 @@ public class MentionsEditText extends AppCompatEditText implements TokenSource {
     @SuppressWarnings("deprecation")
     @SuppressLint("ObsoleteSdkInt")
     private void saveToClipboard(@NonNull CharSequence selectedText, @Nullable Intent intent) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(selectedText);
-        } else {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData.Item item = new ClipData.Item(selectedText, intent, null);
             android.content.ClipData clip = new ClipData(null, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
             clipboard.setPrimaryClip(clip);
-        }
+
     }
 
     /**

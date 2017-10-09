@@ -35,6 +35,8 @@ import java.util.List;
  * Custom {@link Editable} containing methods specifically regarding mentions in a {@link Spanned} string object. Used
  * specifically within the {@link MentionsEditText}.
  */
+
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class MentionsEditable extends SpannableStringBuilder implements Parcelable {
 
     public MentionsEditable(@NonNull CharSequence text) {
@@ -131,7 +133,7 @@ public class MentionsEditable extends SpannableStringBuilder implements Parcelab
     @NonNull
     public List<MentionSpan> getMentionSpans() {
         MentionSpan[] mentionSpans = getSpans(0, length(), MentionSpan.class);
-        return (mentionSpans != null) ? Arrays.asList(mentionSpans) : new ArrayList<MentionSpan>();
+        return (mentionSpans != null) ? Arrays.asList(mentionSpans) : new ArrayList<>();
     }
 
     /**

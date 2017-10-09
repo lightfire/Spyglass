@@ -1,13 +1,1 @@
-subprojects {
-  repositories {
-    jcenter()
-    maven {
-      url "https://maven.google.com"
-    }
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-  }
 
-  project.buildDir = new File(project.rootProject.buildDir, project.name)
-}

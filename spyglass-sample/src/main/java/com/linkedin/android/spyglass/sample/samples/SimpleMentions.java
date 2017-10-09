@@ -17,6 +17,7 @@ package com.linkedin.android.spyglass.sample.samples;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 
 import com.linkedin.android.spyglass.sample.R;
 import com.linkedin.android.spyglass.sample.data.models.City;
@@ -37,14 +38,18 @@ public class SimpleMentions extends AppCompatActivity implements QueryTokenRecei
 
     private RichEditorView editor;
     private City.CityLoader cities;
+    private ListView externalListView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_mentions);
-        editor = (RichEditorView) findViewById(R.id.editor);
+        editor = findViewById(R.id.editor);
         editor.setQueryTokenReceiver(this);
         editor.setHint(getResources().getString(R.string.type_city));
         cities = new City.CityLoader(getResources());
+        externalListView = findViewById(R.id.externalListView);
+        editor.setmSuggestionsList(this,externalListView);
+
     }
 
     @Override

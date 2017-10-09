@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import com.linkedin.android.spyglass.R;
 import com.linkedin.android.spyglass.ui.RichEditorView;
 
+
 /**
  * Convenient fragment wrapper around a {@link RichEditorView}.
  */
@@ -34,7 +35,9 @@ public class RichEditorFragment extends Fragment {
     private static final String FRAGMENT_TAG = "fragment_rich_editor";
 
     private RichEditorView mRichEditor;
+
     private OnCreateViewListener mOnCreateViewListener;
+
 
     public interface OnCreateViewListener {
         void onFragmentCreateView(RichEditorFragment fragment);
@@ -70,7 +73,9 @@ public class RichEditorFragment extends Fragment {
             return null;
         }
 
-        mRichEditor = (RichEditorView) rootView.findViewById(R.id.rich_editor);
+        mRichEditor = rootView.findViewById(R.id.rich_editor);
+
+
         if (mOnCreateViewListener != null) {
             mOnCreateViewListener.onFragmentCreateView(this);
         }

@@ -28,15 +28,16 @@ public interface Mentionable extends Suggestible {
     /**
      * Various display modes that change the text for the mention.
      */
-    public enum MentionDisplayMode {
+    enum MentionDisplayMode {
         FULL, PARTIAL, NONE
     }
 
     /**
      * What action to take when the span is deleted
      */
-    public enum MentionDeleteStyle {
+    enum MentionDeleteStyle {
         // Clear the underlying text (remove the whole span).
+        @SuppressWarnings("unused")
         FULL_DELETE,
 
         // First clear everything but the first name. On a second delete, delete the first name.
@@ -52,13 +53,13 @@ public interface Mentionable extends Suggestible {
      * @return the current text to display to the user
      */
     @NonNull
-    public abstract String getTextForDisplayMode(MentionDisplayMode mode);
+    String getTextForDisplayMode(MentionDisplayMode mode);
 
     /**
      * Determines how the mention should be handled by a MentionSpan as it is being deleted.
      *
      * @return the proper {@link MentionDeleteStyle}
      */
-    public abstract MentionDeleteStyle getDeleteStyle();
+    MentionDeleteStyle getDeleteStyle();
 
 }

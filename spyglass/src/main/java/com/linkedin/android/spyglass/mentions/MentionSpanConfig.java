@@ -21,6 +21,7 @@ import android.support.annotation.ColorInt;
  * Class used to configure various options for the {@link MentionSpan}. Instantiate using the
  * {@link MentionSpanConfig.Builder} class.
  */
+@SuppressWarnings("WeakerAccess")
 public class MentionSpanConfig {
     public final int LIST_POSITION;
     @ColorInt public final int NORMAL_TEXT_COLOR;

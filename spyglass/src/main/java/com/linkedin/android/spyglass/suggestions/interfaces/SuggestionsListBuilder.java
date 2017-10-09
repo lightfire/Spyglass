@@ -42,7 +42,7 @@ public interface SuggestionsListBuilder {
      * @return a list of {@link Suggestible} representing the suggestions in proper order
      */
     @NonNull
-    public List<Suggestible> buildSuggestions(final @NonNull Map<String, SuggestionsResult> latestResults,
+     List<Suggestible> buildSuggestions(final @NonNull Map<String, SuggestionsResult> latestResults,
                                               final @NonNull String currentTokenString);
 
     /**
@@ -58,7 +58,7 @@ public interface SuggestionsListBuilder {
      * @return a view for the corresponding {@link Suggestible} object in the adapter
      */
     @NonNull
-    public View getView(final @NonNull Suggestible suggestion,
+     View getView(final @NonNull Suggestible suggestion,
                         @Nullable View convertView,
                         ViewGroup parent,
                         final @NonNull Context context,

@@ -76,6 +76,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
     private MentionsEditText mMentionsEditText;
     private int mOriginalInputType = InputType.TYPE_CLASS_TEXT; // Default to plain text
 
+
     private ListView mSuggestionsList;
 
     private QueryTokenReceiver mHostQueryTokenReceiver;
@@ -92,6 +93,8 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
 
     private boolean mWaitingForFirstResult = false;
 
+
+
     // --------------------------------------------------
     // Constructors & Initialization
     // --------------------------------------------------
@@ -106,14 +109,45 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         init(context, attrs, 0);
     }
 
+
+    /**
+     * Add External ListView to Editor
+     * @param context Context
+     * @param attrs attr
+     * @param defStyleAttr defStyle
+     */
     public RichEditorView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
 
-    @SuppressWarnings("unused")
+
+
+    public void setmSuggestionsList(Context context,ListView listView){
+        this.mSuggestionsList = listView;
+        updateMSuggestionListView(context);
+    }
+
+
     public ListView getmSuggestionsList(){
         return mSuggestionsList;
+    }
+
+
+    public void updateMSuggestionListView(Context context){
+        // Set the suggestions adapter
+        SuggestionsListBuilder listBuilder = new BasicSuggestionsListBuilder();
+        mSuggestionsAdapter = new SuggestionsAdapter(context, this, listBuilder);
+        mSuggestionsList.setAdapter(mSuggestionsAdapter);
+
+        // Set the item click listener
+        mSuggestionsList.setOnItemClickListener((parent, view, position, id) -> {
+            Mentionable mention = (Mentionable) mSuggestionsAdapter.getItem(position);
+            if (mMentionsEditText != null) {
+                mMentionsEditText.insertMention(mention);
+                mSuggestionsAdapter.clear();
+            }
+        });
     }
 
     public void init(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -124,23 +158,26 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
 
         switch (mentionSpanConfig.LIST_POSITION){
             case 1:
-                inflater.inflate(R.layout.editor_view_top, this, true);
+                if (inflater != null) {
+                    inflater.inflate(R.layout.editor_view_top, this, true);
+                }
                 break;
             case 2:
-                inflater.inflate(R.layout.editor_view, this, true);
+                if (inflater != null) {
+                    inflater.inflate(R.layout.editor_view, this, true);
+                }
                 break;
             case 0:
             default:
-                inflater.inflate(R.layout.editor_view, this, true);
+                if (inflater != null) {
+                    inflater.inflate(R.layout.editor_view, this, true);
+                }
                 break;
 
         }
 
-
-
         // Get the inner views
         mMentionsEditText =  findViewById(R.id.text_editor);
-
         mSuggestionsList =  findViewById(R.id.suggestions_list);
 
         // Get the MentionSpanConfig from custom XML attributes and set it
@@ -165,14 +202,11 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
         mSuggestionsList.setAdapter(mSuggestionsAdapter);
 
         // Set the item click listener
-        mSuggestionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Mentionable mention = (Mentionable) mSuggestionsAdapter.getItem(position);
-                if (mMentionsEditText != null) {
-                    mMentionsEditText.insertMention(mention);
-                    mSuggestionsAdapter.clear();
-                }
+        mSuggestionsList.setOnItemClickListener((parent, view, position, id) -> {
+            Mentionable mention = (Mentionable) mSuggestionsAdapter.getItem(position);
+            if (mMentionsEditText != null) {
+                mMentionsEditText.insertMention(mention);
+                mSuggestionsAdapter.clear();
             }
         });
 
@@ -231,7 +265,7 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
      */
     @NonNull
     public List<MentionSpan> getMentionSpans() {
-        return (mMentionsEditText != null) ? mMentionsEditText.getMentionsText().getMentionSpans() : new ArrayList<MentionSpan>();
+        return (mMentionsEditText != null) ? mMentionsEditText.getMentionsText().getMentionSpans() : new ArrayList<>();
     }
 
     /**
@@ -329,17 +363,14 @@ public class RichEditorView extends RelativeLayout implements TextWatcher, Query
     @Override
     public void onReceiveSuggestionsResult(final @NonNull SuggestionsResult result, final @NonNull String bucket) {
         // Add the mentions and notify the editor/dropdown of the changes on the UI thread
-        post(new Runnable() {
-            @Override
-            public void run() {
-                if (mSuggestionsAdapter != null) {
-                    mSuggestionsAdapter.addSuggestions(result, bucket, mMentionsEditText);
-                }
-                // Make sure the list is scrolled to the top once you receive the first query result
-                if (mWaitingForFirstResult && mSuggestionsList != null) {
-                    mSuggestionsList.setSelection(0);
-                    mWaitingForFirstResult = false;
-                }
+        post(() -> {
+            if (mSuggestionsAdapter != null) {
+                mSuggestionsAdapter.addSuggestions(result, bucket, mMentionsEditText);
+            }
+            // Make sure the list is scrolled to the top once you receive the first query result
+            if (mWaitingForFirstResult && mSuggestionsList != null) {
+                mSuggestionsList.setSelection(0);
+                mWaitingForFirstResult = false;
             }
         });
     }
